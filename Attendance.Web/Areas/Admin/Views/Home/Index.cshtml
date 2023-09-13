@@ -1,0 +1,210 @@
+﻿@model HomeViewModel
+<style>
+    .page-item .page-link {
+        display: inline-flex;
+        height: 42px !important;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .page-link.disabled {
+        background-color: lightgray;
+    }
+
+    .tab .nav-link {
+        cursor: pointer;
+    }
+
+    .table > :not(caption) > * > * {
+        padding: .5rem 1rem;
+    }
+</style>
+<div>
+    <div class="row">
+
+
+        <div class="col-sm-3 p-3">
+            <div class=" card " data-aos="fade-up" data-aos-delay="900">
+                <div class="card-body">
+                    <div class="progress-widget">
+                        <div class="progress-detail">
+                            <p class="mb-2">StaffMembers Count</p>
+                            <h4 class="counter" style="visibility: visible;">@Model.counters?.StaffMembersCount</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> <div class="col-sm-3 p-3">
+            <div class=" card " data-aos="fade-up" data-aos-delay="900">
+                <div class="card-body">
+                    <div class="progress-widget">
+                        <div class="progress-detail">
+                            <p class="mb-2">Active Contracts Count</p>
+                            <h4 class="counter" style="visibility: visible;">@Model.counters?.ActiveUserContracts</h4>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> <div class="col-sm-3 p-3">
+            <div class=" card " data-aos="fade-up" data-aos-delay="900">
+                <div class="card-body">
+                    <div class="progress-widget">
+                        <div class="progress-detail">
+                            <p class="mb-2">Contract Type Count</p>
+                            <h4 class="counter" style="visibility: visible;">@Model.counters?.ContractTypeCount</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-3 p-3">
+            <div class=" card " data-aos="fade-up" data-aos-delay="900">
+                <div class="card-body">
+                    <div class="progress-widget">
+                        <div class="progress-detail">
+                            <p class="mb-2">Leave TYPE Count</p>
+                            <h4 class="counter" style="visibility: visible;">@Model.counters?.LeaveTypeCount</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-12" data-aos="fade-up" data-aos-delay="900">
+            <div class="card">
+                <div class="card-header ">
+                    <div class="header-title d-flex justify-content-between align-items-center w-100">
+                        <h4 class="card-title">
+                            Attendances Today
+                            (<span id="attcount">
+                                @Model.counters?.TodayAttendenceCount
+                            </span>)
+                        </h4>
+                        <button class="btn btn-sm btn-dark" id="refersh">refersh</button>
+                    </div>
+                </div>
+                <div class="card-body px-0">
+
+                    <div class="table-responsive">
+                        <table id="user-list-table" class="table table-striped" role="grid" data-bs-toggle="data-table">
+                            <thead>
+                                <tr class="ligth">
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Day</th>
+                                    <th class="text-center">Date</th>
+                                    <th class="text-center">Sign In Time</th>
+                                    <th class="text-center">Sign Out Time</th>
+                                    <th class="text-center">Presences</th>
+                                </tr>
+                            </thead>
+                            <tbody id="HomeTblBody">
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-sm-12" data-aos="fade-up" data-aos-delay="900">
+            <div class="card">
+                <div class="card-header ">
+                    <div class="header-title d-flex justify-content-between align-items-center w-100">
+                        <h4 class="card-title">
+                            anothers Today
+                            (<span id="attcount2">
+                                0
+                            </span>)
+                        </h4>
+                    </div>
+                </div>
+                <div class="card-body px-0">
+
+                    <div class="table-responsive">
+                        <table id="user-list-table" class="table table-striped" role="grid" data-bs-toggle="data-table">
+                            <thead>
+                                <tr class="ligth">
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Day</th>
+                                    <th class="text-center">Date</th>
+                                    <th class="text-center">Sign In Time</th>
+                                    <th class="text-center">Sign Out Time</th>
+                                    <th class="text-center">Presences</th>
+                                </tr>
+                            </thead>
+                            <tbody id="HomeTblBody2">
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            GetAttendances(); GetAttendances2()
+        })
+        $("#refersh").on("click", function () {
+            GetAttendances(); GetAttendances2()
+        })
+        function GetAttendances() {
+            $("#HomeTblBody").html(`<tr><td colspan="7"><div class="d-flex justify-content-center align-items-center"  style="height:${($("#SizeSelect").val() * 30)}px;width:100%"> <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div></td></tr>`);
+            $.ajax({
+                url: '/GetAttendances',
+                success: function (result) {
+                    console.log(result)
+                    $(`#HomeTblBody`).html('');
+                    $(`#attcount`).html(result.length);
+                    if (result.length > 0)
+                        $.each(result, function (index, item) {
+                            var tr = '<tr><td class="text-center">' + item.userName + '</td>' +
+                                '<td class="text-center">' + item.dayOfWeek + '</td>'
+                                + '<td class="text-center">' + item.day + '</td>'
+                                + '<td class="text-center">' + item.signInTime + '</td>'
+                                + '<td class="text-center">' + item.signOutTime + '</td>'
+                                + '<td class="text-center">' + item.status + '</td>+</tr>';
+                            $('#HomeTblBody').append(tr);
+                        });
+                    else
+                        $('#HomeTblBody').html(`<tr><td colspan="7"><div class="d-flex justify-content-center align-items-center flex-column"><i class="bx bxs-data text-secondary" style="font-size:120px"></i><p>No Data Matched</p></div></td></tr>`);
+                }
+            })
+        }
+        function GetAttendances2() {
+            $("#HomeTblBody2").html(`<tr><td colspan="7"><div class="d-flex justify-content-center align-items-center"  style="width:100%"> <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div></td></tr>`);
+            $.ajax({
+                url: '/GetAttendances2',
+                success: function (result) {
+                    console.log(result)
+                    $(`#HomeTblBody2`).html('');
+                    $(`#attcount2`).html(result.length);
+                    if (result.length > 0)
+                        $.each(result, function (index, item) {
+                            var tr = '<tr><td class="text-center">' + item.userName + '</td>' +
+                                '<td class="text-center">' + item.dayOfWeek + '</td>'
+                                + '<td class="text-center">' + item.day + '</td>'
+                                + '<td class="text-center">' + item.signInTime + '</td>'
+                                + '<td class="text-center">' + item.signOutTime + '</td>'
+                                + '<td class="text-center">' + item.status + '</td>+</tr>';
+                            $('#HomeTblBody2').append(tr);
+                        });
+                    else
+                        $('#HomeTblBody2').html(`<tr><td colspan="7"><div class="d-flex justify-content-center align-items-center flex-column"><i class="bx bxs-data text-secondary" style="font-size:120px"></i><p>No Data Matched</p></div></td></tr>`);
+                }
+            })
+        }
+    </script>
+}

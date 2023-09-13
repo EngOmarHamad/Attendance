@@ -1,0 +1,14 @@
+﻿global using Attendance.DataAccess.Configurations;
+global using Attendance.DataAccess.Hubs;
+global using Attendance.DataAccess.Interfaces;
+global using Attendance.Models;
+global using Attendance.Utility.Enums;
+global using Attendance.Utility.SharedMethods;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using Microsoft.AspNetCore.SignalR;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;
+global using System.Security.Claims;

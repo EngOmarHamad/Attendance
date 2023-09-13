@@ -1,0 +1,120 @@
+﻿@using Attendance.Models;
+@model UserContractModel
+@{
+}
+
+
+
+<form method="post" class="needs-validation" id="form" asp-action="Add" asp-area="Admin" asp-controller="Contract" enctype="multipart/form-data">
+
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <div class="header-title">
+                <h4 class="card-title">New Contract Information</h4>
+            </div>
+        </div>
+        <div class="card-body">
+
+            <input class="form-control" hidden asp-for="UserId">
+
+            <div class="form-group">
+                <label class="form-label" asp-for="ContractTypeId">ContractType:</label>
+                <select class="form-control" required asp-for="ContractTypeId" asp-items="ViewBag.ContractType" placeholder="ContractType">
+                    <option value="">select</option>
+                </select>
+                <span class="text-danger" asp-validation-for="ContractTypeId"> </span>
+            </div>
+
+
+
+
+            <div class="form-group">
+                <label class="form-label" asp-for="ContractStartDate">Contract Start Date:</label>
+                <input class="form-control" id="startdate" required asp-for="ContractStartDate" placeholder="Contract Start Date">
+                <span class="text-danger" asp-validation-for="ContractStartDate"> </span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" asp-for="ContractEndDate">Contract End Date:</label>
+                <input class="form-control" id="enddate" required asp-for="ContractEndDate" placeholder="Contract End Date">
+                <span class="text-danger" asp-validation-for="ContractEndDate"> </span>
+            </div>
+
+            <hr>
+
+            <div class="d-flex justify-content-center align-content-center">
+                <button type="submit" class="btn btn-primary">
+                    <i class='bx bxs-message-square-add bx-tada bx-rotate-90' style='color:#aca6a6'></i>
+                    Add New Contract
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</form>
+
+
+
+
+@section Styles{
+    <link href="~/assets/vendor/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+
+}
+
+
+@section Scripts{
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+    <script src="~/assets/vendor/sweetalert2/sweetalert2.all.min.js"></script>
+
+
+    <script>
+
+        var form = document.forms[0];
+
+        form.addEventListener("submit", (event) => {
+
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            else {
+
+                var startdatevalue = document.getElementById('startdate').value;
+                var startdate = document.getElementById('startdate');
+
+
+                var enddatevalue = document.getElementById('enddate').value;
+                var enddate = document.getElementById('startdate');
+
+
+                if (enddatevalue < startdatevalue) {
+
+                    Swal.fire({
+                        title: 'the Contract End Date must be less than Contract Start Date',
+                        icon: 'error',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ok',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        }
+                    })
+
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                else {
+                    form.submit();
+                }
+            }
+        })
+    </script>
+}

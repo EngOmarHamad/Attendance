@@ -1,0 +1,93 @@
+﻿<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header" id="bigdiv">
+                <div class="d-flex justify-content-between">
+                    <h3>
+                        List of  Leave Type
+                    </h3>
+                    <div class="">
+                        <button class="btn btn-primary" onclick="ModalItem('modalleavetype',null,false)">
+                            Add Leave Type
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-body">
+                <div class="accordion" id="accordionExample">
+                </div>
+
+            </div>
+            <div class="card-footer text-muted">
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-danger" id="deletemultiple" onclick="DeleteMulti()">
+                        Delete Multi Leave Types
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="modalleavetype" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="frmleavetype" class="needs-validation" novalidate>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input hidden id="id" name="id" type="number" />
+                        <label for="Sku" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" id="Name" required />
+                        <div class="valid-tooltip">
+                            Looks good!
+                        </div>
+                        <div class="invalid-tooltip">
+                            Please Enter the Name
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label for="Description" class="col-form-label">Description:</label>
+                        <textarea class="form-control h-100" id="Description" required></textarea>
+                        <div class="valid-tooltip">
+                            Looks good!
+                        </div>
+                        <div class="invalid-tooltip">
+                            Please Enter the Description
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" id="EditSubmit" class="btn btn-primary">
+                        <i class='bx bx-edit bx-flashing' style='color:#ddd8d8'></i>
+                        Edit
+                    </button>
+                    <button type="submit" id="AddSubmit" class="btn btn-primary">
+                        <i class='bx bxs-message-square-add bx-tada bx-rotate-90' style='color:#aca6a6'></i>
+                        Add
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Styles{
+    <link href="~/assets/vendor/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+
+}
+
+@section Scripts{
+    <script src="~/assets/vendor/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="~/assets/js/api/leavertypecrudapi.js"></script>
+
+}

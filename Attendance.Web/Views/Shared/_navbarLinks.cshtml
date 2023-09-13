@@ -1,0 +1,18 @@
+﻿@if (User.HasClaim(claim => claim.Type == "Permission" && claim.Value == "StaffMember"))
+{
+    <li class="nav-item">
+        <a class="nav-link" asp-action="Index" asp-controller="StaffAttendances">My Attendances</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-action="Index" asp-controller="StaffContracts">My Contracts</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-action="Index" asp-controller="StaffLeaves">My Leaves</a>
+    </li>
+}
+@if (User.HasClaim(claim => claim.Type == "Permission" && claim.Value == "Adminestrator"))
+{
+    <li class="nav-item">
+        <a class="nav-link" asp-action="Index" asp-controller="Home" asp-area="Admin">Conrtol Panel</a>
+    </li>
+}   

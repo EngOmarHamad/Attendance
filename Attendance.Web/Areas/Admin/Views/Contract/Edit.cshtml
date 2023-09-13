@@ -1,0 +1,73 @@
+﻿@using Attendance.Models;
+@model UserContractModel
+@{
+}
+
+
+
+<form method="post" asp-action="Edit" asp-area="Admin" asp-controller="Contract" enctype="multipart/form-data">
+
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <div class="header-title">
+                <h4 class="card-title">New Contract Information</h4>
+            </div>
+        </div>
+        <div class="card-body">
+
+
+            <input class="form-control" hidden asp-for="UserId">
+
+
+            <div class="form-group">
+                <label class="form-label" asp-for="ContractTypeId">ContractType:</label>
+                <select class="form-control" asp-for="ContractTypeId" asp-items="ViewBag.ContractType" placeholder="ContractType">
+                    <option value="">select</option>
+                </select>
+                <span class="text-danger" asp-validation-for="ContractTypeId"> </span>
+            </div>
+
+
+
+
+            <div class="form-group">
+                <label class="form-label" asp-for="ContractStartDate">Contract Start Date:</label>
+                <input class="form-control" asp-for="ContractStartDate" placeholder="Contract Start Date">
+                <span class="text-danger" asp-validation-for="ContractStartDate"> </span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" asp-for="ContractEndDate">Contract End Date:</label>
+                <input class="form-control" asp-for="ContractEndDate" placeholder="Contract End Date">
+                <span class="text-danger" asp-validation-for="ContractEndDate"> </span>
+            </div>
+
+
+
+
+
+
+            <hr>
+
+            <div class="d-flex justify-content-center align-content-center">
+                <button type="submit" class="btn btn-primary">
+                    <i class='bx bx-edit bx-flashing' style='color:#ddd8d8'></i>
+                    Edit Contract
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</form>
+
+
+
+
+
+@section Scripts{
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+}

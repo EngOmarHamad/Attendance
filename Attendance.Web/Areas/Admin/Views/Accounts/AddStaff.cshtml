@@ -1,0 +1,239 @@
+﻿@using Attendance.Utility.Enums;
+@model AddUserViewModel
+
+<div class="conatiner-fluid content-inner mt-n5 p-0">
+    <form method="post" class="needs-validation" id="form" novalidate asp-action="AddStaff" asp-area="Admin" asp-controller="Accounts" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-xl-3 col-lg-4">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="header-title">
+                            <h4 class="card-title">Add New User</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="profile-img-edit position-relative">
+                                <img src="../../assets/images/avatars/01.png" alt="profile-pic" class=" profile-picture rounded avatar-100">
+                                <div class="upload-icone bg-primary">
+                                    <svg class="upload-button icon-14" width="14" viewBox="0 0 24 24">
+                                        <path fill="#ffffff" d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div>
+                                <input class="file-upload" hidden asp-for=Image type="file" accept="image/*">
+                                <span class="text-danger" asp-validation-for="Image"> </span>
+                                @* <div class="invalid-feedback">
+                                Please Upload The Image !!
+                                </div>*@
+                            </div>
+                            <div class="img-extension mt-3">
+                                <div class="d-inline-block align-items-center">
+                                    <span>Only</span>
+                                    <a href="javascript:void();">.jpg</a>
+                                    <a href="javascript:void();">.png</a>
+                                    <a href="javascript:void();">.jpeg</a>
+                                    <span>allowed</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-9 col-lg-8">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="header-title">
+                            <h4 class="card-title">New User Information</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="new-user-info">
+                            <div asp-validation-summary="All"></div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" asp-for="FirstName">First Name:</label>
+                                    <input class="form-control" required asp-for="FirstName" placeholder="First Name">
+                                    <span class="text-danger" asp-validation-for="FirstName"> </span>
+                                    <div class="invalid-feedback">
+                                        Please Enter  The FirstName !!
+                                    </div>
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" asp-for="FirstNameAr">First Name Arabic:</label>
+                                    <input class="form-control inputAr" required asp-for="FirstNameAr" placeholder="First Name Arabic">
+                                    <span class="text-danger" asp-validation-for="FirstNameAr"> </span>
+                                    <div class="invalid-feedback">
+                                        Please Enter  The First Name Arabic !!
+                                    </div>
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" asp-for="FamilyName">Family Name:</label>
+                                    <input class="form-control" required asp-for="FamilyName" placeholder="Family Name">
+                                    <span class="text-danger" asp-validation-for="FamilyName"> </span>
+                                    <div class="invalid-feedback">
+                                        Please Enter  The Family Name !!
+                                    </div>
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" asp-for="FamilyNameAr">Family Name Arabic:</label>
+                                    <input class="form-control inputAr" required asp-for="FamilyNameAr" placeholder="Family Name Arabic">
+                                    <span class="text-danger" asp-validation-for="FamilyNameAr"> </span>
+                                    <div class="invalid-feedback">
+                                        Please Enter  The Family Name Arabic !!
+                                    </div>
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" asp-for="Address">Address:</label>
+                                    <input class="form-control" required asp-for="Address" placeholder="Address">
+                                    <span class="text-danger" asp-validation-for="Address"> </span>
+                                    <div class="invalid-feedback">
+                                        Please Enter  The Address !!
+                                    </div>
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" asp-for="Databirth">Birth Of Date:</label>
+                                    <input class="form-control" required id="databirth" asp-for="Databirth" type="date" placeholder="BirthOfDate">
+                                    <span class="text-danger" asp-validation-for="Databirth" id="DatabirthSpan"> </span>
+                                    <div class="invalid-feedback">
+                                        Please Enter  The Databirth !!
+                                    </div>
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" asp-for="Gender">Gender:</label>
+                                    <select class="form-control" required asp-for="Gender" asp-items="@Html.GetEnumSelectList<Gender>()" placeholder="Address">
+                                        <option value="">select</option>
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="Gender"> </span>
+                                    <div class="invalid-feedback">
+                                        Please Enter  The FirstName !!
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" asp-for="PhoneNumber">Mobile Number:</label>
+                                    <input class="form-control" required asp-for="PhoneNumber" placeholder="Mobile Number">
+                                    <span class="text-danger" asp-validation-for="PhoneNumber"> </span>
+                                    <div class="invalid-feedback">
+                                        Please Enter  The Mobile Number: !!
+                                    </div>
+
+                                </div>
+                            </div>
+                            <hr>
+                            <h5 class="mb-3">Security</h5>
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label class="form-label" asp-for="Email">User Name:</label>
+                                    <input class="form-control" required asp-for="Email" placeholder="User Name">
+                                    <span class="text-danger" asp-validation-for="Email"> </span>
+                                    <div class="invalid-feedback">
+                                        Please Enter  The User Name !!
+                                    </div>
+
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" asp-for="Password">Password:</label>
+                                    <input class="form-control" required asp-for="Password" placeholder="Password">
+                                    <span class="text-danger" asp-validation-for="Password"> </span>
+                                    <div class="invalid-feedback">
+                                        Please Enter  The Password !!
+                                    </div>
+
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" asp-for="ConfirmPassword">Confirm Password:</label>
+                                    <input class="form-control" required asp-for="ConfirmPassword" placeholder="Confirm Password">
+                                    <span class="text-danger" asp-validation-for="ConfirmPassword"> </span>
+                                    <div class="invalid-feedback">
+                                        Please Enter  The Confirm Password !!
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <button type="submit" class="btn btn-primary">
+                                <i class='bx bxs-message-square-add bx-tada bx-rotate-90' style='color:#aca6a6'></i>
+                                Add New User
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+@section Scripts{
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+    <script>
+
+
+
+        $('.upload-button').on('click', function () {
+            $('.file-upload').click();
+            //$('.file-upload').trigger('click');
+
+        });
+        $('.file-upload').change((e) => {
+            console.log(e);
+            const file = e.target.files[0];
+            console.log(file);
+            if (file) {
+                let reader = new FileReader();
+                reader.onloadend = function (event) {
+                    console.log(event.target.result);
+                    $('.profile-picture ').attr('src', event.target.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        var form = document.forms[0];
+
+        form.addEventListener("submit", (event) => {
+            var databirth = document.getElementById('databirth');
+            var databirthvalue = document.getElementById("databirth").value;
+            var ToDate = new Date(); 
+            if (new Date(databirthvalue).getTime() > ToDate.getTime()) {
+                alert("The databirth must be Bigger or Equal to today date");
+                databirth.classList.add('is-invalid');
+                event.preventDefault();
+                event.stopPropagation(); 
+            }
+            else {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else {
+                    form.submit();
+                }
+            }
+        });
+
+
+
+
+
+    </script>
+
+    }
+@*$('.upload-button').click(function () { alert("The paragraph was clicked.");});*@

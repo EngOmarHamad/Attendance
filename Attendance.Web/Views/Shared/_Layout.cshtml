@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ITSC Attendenc System</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/assets/images/favicon.ico" />
+    <!-- Library / Plugin Css Build -->
+    <link rel="stylesheet" href="~/assets/css/core/libs.min.css" />
+    <!-- Aos Animation Css -->
+    <link rel="stylesheet" href="~/assets/vendor/aos/dist/aos.css" />
+    <!-- Hope Ui Design System Css -->
+    <link rel="stylesheet" href="~/assets/css/hope-ui.min.css" asp-append-version="true" />
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="~/assets/css/custom.min.css?v=2.0.0" />
+    <!-- Dark Css -->
+    <link rel="stylesheet" href="~/assets/css/dark.min.css" />
+
+    <!-- Customizer Css -->
+    <!-- RTL Css -->
+    <link rel="stylesheet" href="~/assets/css/rtl.min.css" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link href="~/assets/css/loader.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/assets/css/index.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="stylesheet" href="~/assets/css/customizer.min.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles",false)
+</head>
+<body>
+    <div id="loading">
+        <div class="loader simple-loader">
+            <div class="loader-body">
+                <div class="d-flex align-items-center justify-content-center w-100 h-100">
+                    <span class="loader-span"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <span class="uisheet screen-darken"></span>
+        <div class="header">
+            <div class="container">
+                <nav class="rounded nav navbar navbar-expand-lg navbar-light top-1 position-fixed " style="left:5%; width:90%;z-index:100;">
+                    <div class="container-fluid">
+                        <partial name="_Logo" />
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-2" aria-controls="navbar-2"
+                                aria-expanded="false"
+                                aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbar-2">
+                            <ul class="mb-2 p-2 navbar-nav ms-auto mb-lg-0 d-flex align-items-center">
+                                <partial name="_navbarLinks" />
+                                <partial name="_LoginPartial" />
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        @RenderBody()
+    </div>
+    <div class="modal fade text-left"
+         id="inlineForm"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="myModalLabel33"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+             role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel33">Login Form</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="#">
+                    <div class="modal-body">
+                        <label>Email: </label>
+                        <div class="form-group">
+                            <input type="text" placeholder="Email Address" class="form-control" />
+                        </div>
+                        <label>Password: </label>
+                        <div class="form-group">
+                            <input type="password" placeholder="Password" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button"
+                                class="btn btn-light-secondary"
+                                data-bs-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Close</span>
+                        </button>
+                        <button type="button"
+                                class="btn btn-primary ml-1"
+                                data-bs-dismiss="modal">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">login</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/assets/js/currentdatetime.js"></script>
+    <!-- Library Bundle Script -->
+    <script src="~/assets/js/core/libs.min.js"></script>
+    <!-- External Library Bundle Script -->
+    <script src="~/assets/js/core/external.min.js"></script>
+    <!-- Widgetchart Script -->
+    <script src="~/assets/js/charts/widgetcharts.js"></script>
+    <!-- mapchart Script -->
+    <script src="~/assets/js/charts/vectore-chart.js"></script>
+    <script src="~/assets/js/charts/dashboard.js"></script>
+    <!-- fslightbox Script -->
+    <script src="~/assets/js/plugins/fslightbox.js"></script>
+    <!-- Settings Script -->
+    <script src="~/assets/js/plugins/setting.js"></script>
+    <script src="~/assets/js/plugins/form-wizard.js"></script>
+    <!-- Slider-tab Script -->
+    <script src="~/assets/js/plugins/slider-tabs.js"></script>
+    <script src="~/assets/vendor/aos/dist/aos.js"></script>
+    <!-- App Script -->
+    <script src="~/assets/js/hope-ui.js" defer></script>
+    <script src="~/lib/microsoft-signalr/signalr.min.js"></script>
+    <script src="~/lib/microsoft-signalr/signalr_start.js"></script>
+    <script src="~/assets/js/notifications.js" asp-append-version="true"></script>
+    @await Component.InvokeAsync("NToastNotify")
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

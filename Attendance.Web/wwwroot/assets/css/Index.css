@@ -1,0 +1,7 @@
+﻿.header {
+    background: url('/assets/images/dashboard/top-image.jpg') !important;
+    background-size: cover !important;
+    background-repeat: no-repeat;
+    /*height: 100vh !important;*/
+    position: relative;
+}

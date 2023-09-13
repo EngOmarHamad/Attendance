@@ -1,0 +1,587 @@
+﻿@model SettingsViewModel
+<style>
+    @@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap);
+
+    body {
+        font-family: "Roboto", sans-serif;
+        background: #eff1f3;
+        min-height: 100vh;
+        position: relative;
+    }
+
+    .section-50 {
+        padding: 50px 0;
+    }
+
+    .dark-link {
+        color: #333;
+    }
+
+    .heading-line {
+        position: relative;
+        padding-bottom: 5px;
+    }
+
+        .heading-line:after {
+            content: "";
+            height: 4px;
+            width: 75px;
+            background-color: #29b6f6;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+    .notification-ui_dd-content {
+        margin-bottom: 30px;
+    }
+
+    .notification-list {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        padding: 20px;
+        margin-bottom: 7px;
+        background: #fff;
+        -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+    }
+
+    .notification-list--unread {
+        border-left: 2px solid #29b6f6;
+    }
+
+    .notification-list .notification-list_content {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+    }
+
+        .notification-list .notification-list_content .notification-list_img img {
+            height: 48px;
+            width: 48px;
+            border-radius: 50px;
+            margin-right: 20px;
+        }
+
+        .notification-list
+        .notification-list_content
+        .notification-list_detail
+        p {
+            margin-bottom: 5px;
+            line-height: 1.2;
+        }
+
+    .notification-list .notification-list_feature-img img {
+        height: 48px;
+        width: 48px;
+        border-radius: 5px;
+        margin-left: 20px;
+    }
+
+    .btn.disabled {
+        cursor: not-allowed !important;
+    }
+</style>
+<div class="conatiner-fluid content-inner mt-n5 py-0">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="">
+                        <div class="d-flex flex-wrap align-items-center">
+                            <div class="profile-img position-relative me-3 mb-3 mb-lg-0 profile-logo profile-logo1">
+                                <img src="@Model.EditProfileSettingsViewModel.ProfileImage" alt="User-Profile"
+                                     class="theme-color-default-img img-fluid rounded-pill avatar-100" />
+                            </div>
+                            <div class="d-flex flex-wrap align-items-center mb-3 mb-sm-0">
+                                <h4 class="me-2 h4">@Model.EditProfileSettingsViewModel.FullName</h4>
+                            </div>
+                        </div>
+                        <ul class="d-flex nav mt-4 nav-pills mb-0 text-center profile-tab" data-toggle="slider-tab"
+                            id="profile-pills-tab" role="tablist">
+                            <li role="list" class="nav-item">
+                                <a class="nav-link active show" data-bs-toggle="tab" href="#profile-Profile" role="tab"
+                                   aria-selected="false">Profile</a>
+                            </li>
+                            <li role="list" class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#profile-Security" role="tab"
+                                   aria-selected="false">Security</a>
+                            </li>
+                            <li role="list" class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#profile-Notifications" role="tab" id="notificationbtn"
+                                   aria-selected="false">Notifications</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="profile-content tab-content">
+                <div id="profile-Profile" class="tab-pane fade active show">
+                    <form method="post" class="needs-validation" id="form" novalidate asp-action="EditProfile"
+                          asp-area="Admin" asp-controller="Accounts" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-4">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between">
+                                        <div class="header-title">
+                                            <h4 class="card-title">Edit Photo</h4>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <div class="profile-img-edit position-relative">
+                                                <img src="@Model.EditProfileSettingsViewModel.ProfileImage"
+                                                     alt="profile-pic" class="profile-picture rounded avatar-100" />
+                                                <div class="upload-icone bg-primary">
+                                                    <svg class="upload-button icon-14" width="14" viewBox="0 0 24 24">
+                                                        <path fill="#ffffff"
+                                                              d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <input hidden asp-for="EditProfileSettingsViewModel.Id" />
+                                                <input class="file-upload" hidden
+                                                       asp-for="EditProfileSettingsViewModel.Image" type="file"
+                                                       accept="image/*" />
+                                                <span class="text-danger"
+                                                      asp-validation-for="EditProfileSettingsViewModel.Image">
+                                                </span>
+                                            </div>
+                                            <div class="img-extension mt-3">
+                                                <div class="d-inline-block align-items-center">
+                                                    <span>Only</span>
+                                                    <a href="javascript:void();">.jpg</a>
+                                                    <a href="javascript:void();">.png</a>
+                                                    <a href="javascript:void();">.jpeg</a>
+                                                    <span>allowed</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-9 col-lg-8">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between">
+                                        <div class="header-title">
+                                            <h4 class="card-title">My information's</h4>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="new-user-info">
+                                            <div class="row">
+                                                <div class="form-group col-12">
+                                                    <label class="form-label"
+                                                           asp-for="EditProfileSettingsViewModel.AboutMe">
+                                                        About Me
+                                                    </label>
+                                                    <textarea class="form-control" required
+                                                              asp-for="EditProfileSettingsViewModel.AboutMe"
+                                                              placeholder="About Me"></textarea>
+                                                    <span class="text-danger"
+                                                          asp-validation-for="EditProfileSettingsViewModel.AboutMe">
+                                                    </span>
+                                                    <div class="invalid-feedback">
+                                                        Please Enter The About Me !!
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label class="form-label"
+                                                           asp-for="EditProfileSettingsViewModel.FirstName">
+                                                        First
+                                                        Name:
+                                                    </label>
+                                                    <input class="form-control" required
+                                                           asp-for="EditProfileSettingsViewModel.FirstName"
+                                                           placeholder="First Name" />
+                                                    <span class="text-danger"
+                                                          asp-validation-for="EditProfileSettingsViewModel.FirstName">
+                                                    </span>
+                                                    <div class="invalid-feedback">
+                                                        Please Enter The FirstName !!
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <label class="form-label"
+                                                           asp-for="EditProfileSettingsViewModel.FirstNameAr">
+                                                        First Name
+                                                        Arabic:
+                                                    </label>
+                                                    <input class="form-control inputAr" required
+                                                           asp-for="EditProfileSettingsViewModel.FirstNameAr"
+                                                           placeholder="First Name Arabic" />
+                                                    <span class="text-danger"
+                                                          asp-validation-for="EditProfileSettingsViewModel.FirstNameAr">
+                                                    </span>
+                                                    <div class="invalid-feedback">
+                                                        Please Enter The First Name Arabic !!
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label class="form-label"
+                                                           asp-for="EditProfileSettingsViewModel.FamilyName">
+                                                        Family
+                                                        Name:
+                                                    </label>
+                                                    <input class="form-control" required
+                                                           asp-for="EditProfileSettingsViewModel.FamilyName"
+                                                           placeholder="Family Name" />
+                                                    <span class="text-danger"
+                                                          asp-validation-for="EditProfileSettingsViewModel.FamilyName">
+                                                    </span>
+                                                    <div class="invalid-feedback">
+                                                        Please Enter The Family Name !!
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label class="form-label"
+                                                           asp-for="EditProfileSettingsViewModel.FamilyNameAr">
+                                                        Family Name
+                                                        Arabic:
+                                                    </label>
+                                                    <input class="form-control inputAr" required
+                                                           asp-for="EditProfileSettingsViewModel.FamilyNameAr"
+                                                           placeholder="Family Name Arabic" />
+                                                    <span class="text-danger"
+                                                          asp-validation-for="EditProfileSettingsViewModel.FamilyNameAr">
+                                                    </span>
+                                                    <div class="invalid-feedback">
+                                                        Please Enter The Family Name Arabic !!
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label class="form-label"
+                                                           asp-for="EditProfileSettingsViewModel.Address">Address:</label>
+                                                    <input class="form-control" required
+                                                           asp-for="EditProfileSettingsViewModel.Address"
+                                                           placeholder="Address" />
+                                                    <span class="text-danger"
+                                                          asp-validation-for="EditProfileSettingsViewModel.Address">
+                                                    </span>
+                                                    <div class="invalid-feedback">
+                                                        Please Enter The Address !!
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label class="form-label"
+                                                           asp-for="EditProfileSettingsViewModel.DateOfBirth">
+                                                        Birth Of
+                                                        Date:
+                                                    </label>
+                                                    <input class="form-control" required id="databirth"
+                                                           asp-for="EditProfileSettingsViewModel.DateOfBirth"
+                                                           placeholder="BirthOfDate" />
+                                                    <span class="text-danger"
+                                                          asp-validation-for="EditProfileSettingsViewModel.DateOfBirth">
+                                                    </span>
+                                                    <div class="invalid-feedback">
+                                                        Please Enter The DateOfBirth !!
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label class="form-label"
+                                                           asp-for="EditProfileSettingsViewModel.Gender">Gender:</label>
+                                                    <select class="form-control" required
+                                                            asp-for="EditProfileSettingsViewModel.Gender"
+                                                            asp-items="@Html.GetEnumSelectList<Gender>()"
+                                                            placeholder="Address">
+                                                        <option value="">select</option>
+                                                    </select>
+                                                    <span class="text-danger"
+                                                          asp-validation-for="EditProfileSettingsViewModel.Gender">
+                                                    </span>
+                                                    <div class="invalid-feedback">
+                                                        Please Enter The FirstName !!
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label class="form-label"
+                                                           asp-for="EditProfileSettingsViewModel.PhoneNumber">
+                                                        Mobile
+                                                        Number:
+                                                    </label>
+                                                    <input class="form-control" required
+                                                           asp-for="EditProfileSettingsViewModel.PhoneNumber"
+                                                           placeholder="Mobile Number" />
+                                                    <span class="text-danger"
+                                                          asp-validation-for="EditProfileSettingsViewModel.PhoneNumber">
+                                                    </span>
+                                                    <div class="invalid-feedback">
+                                                        Please Enter The Mobile Number: !!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                            <div asp-validation-summary="All"></div>
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="bx bx-edit bx-flashing h5" style="color: #ddd8d8"></i>
+                                                Save Changes
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div id="profile-Security" class="tab-pane fade">
+                    <form method="post" class="needs-validation" novalidate asp-action="ChangePassword"
+                          asp-area="Admin" asp-controller="Accounts">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between">
+                                        <div class="header-title">
+                                            <h4 class="card-title">Security</h4>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="new-user-info">
+                                            <div class="row col-md-6">
+                                                <div class="form-group col-md-12">
+                                                    <label class="form-label"
+                                                           asp-for="ChangePasswordViewModel.OldPassword">
+                                                        Old
+                                                        Password:
+                                                    </label>
+                                                    <input class="form-control" required
+                                                           asp-for="ChangePasswordViewModel.OldPassword"
+                                                           placeholder="Old Password" />
+                                                    <span class="text-danger"
+                                                          asp-validation-for="ChangePasswordViewModel.OldPassword">
+                                                    </span>
+                                                    <div class="invalid-feedback">
+                                                        Please Enter The Old Password !!
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label class="form-label"
+                                                           asp-for="ChangePasswordViewModel.NewPassword">
+                                                        New
+                                                        Password:
+                                                    </label>
+                                                    <input class="form-control inputAr" required
+                                                           asp-for="ChangePasswordViewModel.NewPassword"
+                                                           placeholder="New Password" />
+                                                    <span class="text-danger"
+                                                          asp-validation-for="ChangePasswordViewModel.NewPassword">
+                                                    </span>
+                                                    <div class="invalid-feedback">
+                                                        Please Enter The First Name Arabic !!
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label class="form-label"
+                                                           asp-for="ChangePasswordViewModel.ConfirmNewPassword">
+                                                        Confirm New
+                                                        Password:
+                                                    </label>
+                                                    <input class="form-control" required
+                                                           asp-for="ChangePasswordViewModel.ConfirmNewPassword"
+                                                           placeholder="Confirm New Password" />
+                                                    <span class="text-danger"
+                                                          asp-validation-for="ChangePasswordViewModel.ConfirmNewPassword">
+                                                    </span>
+                                                    <div class="invalid-feedback">
+                                                        Please Enter The Family Name !!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                            <div asp-validation-summary="All"></div>
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="bx bx-edit bx-flashing h5" style="color: #ddd8d8"></i>
+                                                Save Changes
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div id="profile-Notifications" class="tab-pane fade">
+                    <div class="card">
+                        <section class="section-50">
+                            <div class="container">
+                                <h3 class="m-b-50 mb-3">
+                                    Notifications
+                                    <i class="fa fa-bell text-muted"></i>
+                                </h3>
+
+                                <div class="notification-ui_dd-content" id="notification-ui_dd-content">
+                                    <div class="notification-list notification-list--unread">
+                                        <div class="notification-list_content">
+                                            <div class="notification-list_img">
+                                                <img src="https://i.imgur.com/zYxDCQT.jpg" alt="user" />
+                                            </div>
+                                            <div class="notification-list_detail">
+                                                <p><b>John Doe</b> reacted to your post</p>
+
+                                                <p class="text-muted">
+                                                    <small>10 mins ago</small>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="">
+                                            <button class="btn btn-dark">Show</button>
+                                            <button class="btn btn-success">Mark as Read</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center" id="LoadNotificationsContainer">
+                                    <a href="#!"
+                                       class="btn btn-success btn-sm d-inline-flex justify-content-center align-items-center gap-3"
+                                       onclick="LoadMoreNotifications(this)">Load more Notifications</a>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        var page = 0;
+        var size = 4;
+
+        function RenderNotification(item) {
+            $("#notification-ui_dd-content").append(`<div class="notification-list notification-list--unread">
+                                                                                                                                                                                                                <div class="notification-list_content">
+                                                                                                                                                                                                                <div class="notification-list_img">
+                                                                                                                                                                                                                <img src="${item.image}" alt="user" />
+                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                <div class="notification-list_detail"> <p>${item.text}</p>
+                                                                                                                                                                                                                <p class="text-muted">
+                                                                                                                                                                                                                <small>${new Date(item.dateSeen).toDateString()}</small>
+                                                                                                                                                                                                                </p></div></div><div class="">
+                                                                                                                                                                                                                <button class="btn btn-dark"><a href="${item.url}" class="text-white">Show</a></button>${RenderbtnRead(item.seen, item.id)}</div></div>`);
+        }
+
+        function RenderbtnRead(seen, id) {
+            if (!seen) {
+                return `<button class="readNotipage btn btn-success" data-id="${id}">Mark as Read</button>`
+            }
+            else {
+                return '<p class="text-success h5">Seen</p>';
+            }
+        }
+
+
+        function ReadNotification(event) {
+            $.ajax({
+                url: '/Notifications/readNotification',
+                method: 'POST',
+                data: {
+                    Id: $(event.target).attr("data-id")
+                },
+                success: function (response) {
+                    if (response.status === 1) {
+                        $(event.target).replaceWith('<p class="text-success h5">Seen</p>');
+                        GetNotificationPartial()
+                    }
+                }
+            });
+        }
+
+
+        $(document).ready(function () {
+
+            var isnotification = @Json.Serialize(ViewBag.NotificationTab);
+            if (isnotification == true) {
+                document.getElementById('notificationbtn').click();
+            }
+            $.ajax({
+                url: '/Notifications/GetNotifications',
+                data: { page: page, size: size },
+                success: function (data) {
+                    if (data.length > 0) {
+                        $("#notification-ui_dd-content").html('');
+                        console.log(data);
+                        $.each(data, function (i, item) {
+                            RenderNotification(item)
+
+                        })
+                        var readbtns = document.getElementsByClassName('readNotipage');
+
+                        for (var btn of readbtns) {
+                            btn.addEventListener('click', ReadNotification);
+                        }
+
+                    }
+                    else {
+                        $('#LoadNotificationsContainer').html("")
+                        $("#notification-ui_dd-content").append("<div class='d-flex justify-content-center align-items-center p-5'> No notifications </div>")
+                    }
+                },
+            });
+        })
+
+        function LoadMoreNotifications(target) {
+            page++;
+            target.classList.add("disabled");
+            target.innerHTML =
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading...';
+
+            $.ajax({
+                url: '/Notifications/GetNotifications',
+                data: { page: page, size: size },
+                success: function (data) {
+                    if (data.length > 0) {
+                        $.each(data, function (i, item) {
+                            RenderNotification(item);
+                        })
+
+                        var readbtns = document.getElementsByClassName('readNotipage');
+
+                        for (var btn of readbtns) {
+                            btn.addEventListener('click', ReadNotification);
+                        }
+
+                    }
+                    else {
+                        $('#LoadNotificationsContainer').html("")
+                        $("#notification-ui_dd-content").append("<div class='d-flex justify-content-center align-items-center p-5'> No more Notifications </div>")
+                    }
+
+                    target.classList.remove("disabled");
+                    target.innerHTML = 'Load more Notifications';
+                },
+            });
+        }
+
+
+        $('.upload-button').on('click', function () {
+            $('.file-upload').click();
+            //$('.file-upload').trigger('click');
+
+        });
+        $('.file-upload').change((e) => {
+            console.log(e);
+            const file = e.target.files[0];
+            console.log(file);
+            if (file) {
+                let reader = new FileReader();
+                reader.onloadend = function (event) {
+                    console.log(event.target.result);
+                    $('.profile-picture ').attr('src', event.target.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+}

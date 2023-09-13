@@ -1,0 +1,92 @@
+﻿@model UserViewModel
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex flex-wrap align-items-center justify-content-between">
+                    <div class="d-flex flex-wrap align-items-center">
+                        <div class="profile-img position-relative me-3 mb-3 mb-lg-0 profile-logo profile-logo1">
+                            <img src="@Model.ProfileImage" alt="User-Profile" class="theme-color-default-img img-fluid rounded-pill avatar-100">
+                        </div>
+                        <div class="d-flex flex-wrap align-items-center mb-3 mb-sm-0">
+                            <h4 class="me-2 h4">@Model.FullName</h4>
+                            <span>- @Model.Major</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="profile-content tab-content">
+            <div class="">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="header-title">
+                            <h4 class="card-title">About Me</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="user-bio">
+                            <p>@Model.AboutMe</p>
+                        </div>
+                        <div class="row g-0">
+                            <div class="col-md-6">
+                                <div class="mt-2 d-flex align-items-center gap-2 ">
+                                    <h6 class="mb-1">Joined:</h6>
+                                    <p class="m-0">@Model.JoinedDate</p>
+                                </div>
+                                <div class="mt-2 d-flex align-items-center gap-2 ">
+                                    <h6 class="mb-1">Gender:</h6>
+                                    <p class="m-0">@(Model.Gender == 0 ? "Male" : "Female")</p>
+                                </div>
+                                <div class="mt-2 d-flex align-items-center gap-2 ">
+                                    <h6 class="mb-1">Birth Date:</h6>
+                                    <p class="m-0">@Model.DateOfBirth</p>
+                                </div>
+                                <div class="mt-2 d-flex align-items-center gap-2 ">
+                                    <h6 class="mb-1">Email:</h6>
+                                    <p class="m-0"><a href="#" class="text-body">@Model.Email</a></p>
+                                </div>
+                                <div class="mt-2 d-flex align-items-center gap-2 ">
+                                    <h6 class="mb-1">Contact:</h6>
+                                    <p class="m-0"><a href="#" class="text-body">@Model.PhoneNumber</a></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mt-2 d-flex align-items-center gap-2 ">
+                                    <h6 class="mb-1">Address:</h6>
+                                    <p class="m-0">@Model.Address</p>
+                                </div>
+
+                                <div class="mt-2 d-flex align-items-center gap-2 ">
+                                    <h6 class="mb-1">Status:</h6>
+                                    <p class="m-0"><a href="#" class="text-body">@Model.Status</a></p>
+                                </div>
+                                @if (Model.HasContract ?? false)
+                                {
+                                    <div class="mt-2 d-flex align-items-center gap-2 ">
+                                        <h6 class="mb-1">HasContract:</h6>
+                                        <p class="m-0"><a href="#" class="text-body">@Model.HasContract</a></p>
+                                    </div>
+                                    <div class="mt-2 d-flex align-items-center gap-2 ">
+                                        <h6 class="mb-1">Conract:</h6>
+                                        <p class="m-0"><a href="#" class="text-body">@Model.CurrentContractName</a></p>
+                                    </div>
+                                }
+                                <div class="mt-2 d-flex align-items-center gap-2 ">
+                                    <h6 class="mb-1">Contact:</h6>
+                                    <p class="m-0"><a href="#" class="text-body">@Model.PhoneNumber</a></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

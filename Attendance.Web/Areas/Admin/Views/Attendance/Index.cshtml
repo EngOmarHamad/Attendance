@@ -1,0 +1,352 @@
+﻿@model AllAttendanceViewModel
+<style>
+    .page-item .page-link {
+        display: inline-flex;
+        height: 42px !important;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .page-link.disabled {
+        background-color: lightgray;
+    }
+
+    .tab .nav-link {
+        cursor: pointer;
+    }
+
+    .table > :not(caption) > * > * {
+        padding: .5rem 1rem;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 38px !important;
+    }
+
+    .select2-selection--single .select2-selection__rendered {
+        line-height: 38px !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        top: 5px !important;
+    }
+</style>
+<div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"> Search</h3>
+                </div>
+                <div class="card-body">
+                    <form id="searchFrom">
+                        <div class="row g-1 ">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="form-group">
+                                    <label>User Name</label>
+                                    <select id="UserId" asp-items="Model.LstUser" class="form-control select">
+                                        <option value=""> All</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="form-group">
+                                    <label>Search By Date</label>
+                                    <select id="DateSelect" class="form-control">
+                                        <option value="Specific">Search By Specific Day</option>
+                                        <option value="Period">Search By Time Period</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="specific" class="col-lg-3 col-md-6 d-block">
+                                <div class="form-group">
+                                    <label>Specific Day</label>
+                                    <input class="form-control" type="date" id="Day" placeholder="Specific Day">
+                                </div>
+                            </div>
+                            <div id="datefromDiv" class="col-lg-3 col-md-6 d-none">
+                                <div class="form-group">
+                                    <label>Date From</label>
+                                    <input class="form-control" type="date" id="DateFrom" placeholder="Date From">
+                                </div>
+                            </div>
+                            <div id="datetoDiv" class="col-lg-3 col-md-6 d-none">
+                                <div class="form-group">
+                                    <label>Date To</label>
+                                    <input class="form-control" type="date" id="DateTo" placeholder="Date To">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-primary" id="btnSearch">
+                                    Search
+                                </button>
+                                <button type="reset" class="btn btn-danger">Clear  </button>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-end">
+                                    <a onclick="LinkReport(1)" class="btn btn-success me-1">
+                                        <i class='bx bxs-file-pdf text-white h6'></i>
+                                        Export PDF
+                                    </a>
+                                    <a onclick="LinkReport(2)" class="btn btn-primary">
+                                        <i class="bi bi-file-earmark-spreadsheet-fill"></i>
+                                        Export Excel
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header ">
+                    <div class="header-title d-flex justify-content-between align-items-center w-100">
+                        <h4 class="card-title">Attendance</h4>
+
+                    </div>
+                    <div class="mt-3 d-flex justify-content-between align-items-center">
+                        <ul class="d-flex nav nav-pills mb-0 text-center index-tab" data-toggle="slider-tab" id="profile-pills-tab" role="tablist">
+                            <li class="nav-item tab">
+                                <a class="nav-link active" onclick="GetDataByActivtiy('')">All</a>
+                            </li>
+                            <li class="nav-item tab">
+                                <a class="nav-link" onclick="GetDataByActivtiy('0')">Presences</a>
+                            </li>
+                            <li class="nav-item tab">
+                                <a class="nav-link" onclick="GetDataByActivtiy('1')">Absent</a>
+                            </li>
+                            <li class="nav-item tab">
+                                <a class="nav-link" onclick="GetDataByActivtiy('2')">Leave</a>
+                            </li>
+                            <li class="nav-item tab">
+                                <a class="nav-link" onclick="GetDataByActivtiy('3')">Late</a>
+                            </li>
+                        </ul>
+                        <div class=" d-flex justify-content-end align-items-center  gap-2">
+                            <p class="m-0 h5"> Sort By:</p>
+                            <div class="d-flex justify-content-center  align-items-center  gap-2">
+                                <select name="SortBy" class="form-select" style="min-width:200px" asp-items="@Model.LstSortBy" id="SortBy"></select>
+                                <select name="SortOrder" class="form-select" id="SortOrder">
+                                    <option value="asc">A-Z</option>
+                                    <option value="desc">Z-A</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body px-0">
+
+                    <div class="table-responsive">
+                        <table id="user-list-table" class="table table-striped" role="grid" data-bs-toggle="data-table">
+                            <thead>
+                                <tr class="ligth">
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Day</th>
+                                    <th class="text-center">Date</th>
+                                    <th class="text-center">Sign In Time</th>
+                                    <th class="text-center">Sign Out Time</th>
+                                    <th class="text-center">Presences</th>
+                                </tr>
+                            </thead>
+                            <tbody id="Tblbady">
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+
+                <div class="card-footer pt-2">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+                        <div>
+                            <span class="d-inline-block me-3 text-sm" id="RecordsFromTo">
+                            </span>
+                        </div>
+                        <div class="d-flex gap-2 justify-content-center align-items-center ">
+                            <form method="get" id="formSelect">
+                                <div class="d-flex justify-content-center gap-2 align-items-center">
+                                    <select class="form-select text-sm w-auto" asp-items="@Model.LstPageSize" name="Size" id="SizeSelect"></select>
+                                </div>
+                            </form>
+                            <nav aria-label="Page navigation example ">
+                                <ul class="pagination  justify-content-end m-0 ">
+                                    <li class="page-item"><a class="page-link" id="firstPage"><i class='bx bxs-chevrons-left'></i></a></li>
+                                    <li class="page-item"><a class="page-link" id="previousPage"><i class='bx bxs-chevron-left'></i></a></li>
+                                    <li class="page-item">
+                                        <a class="page-link active">
+                                            <p id="CurPageOfTotalPages" class="d-flex justify-content-center gap-3   align-items-center  text-white m-0  text-sm">
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" id="nexPage"><i class='bx bxs-chevron-right'></i></a></li>
+                                    <li class="page-item"><a class="page-link" id="lastPage" onclick='GetPartial(obje)'><i class='bx bxs-chevrons-right'></i></a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+}
+
+
+@section Scripts {
+    <script src="~/assets/js/paginationdata.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $('.select').select2({
+            placeholder: 'Select an option'
+        });
+
+        var totalPages = 0;
+        var url = '@Url.Action("GetAttendances","Attendance",new {Area="Admin"})';
+        var stauts = '';
+
+
+        function LinkReport(reportType) {
+            var userid = $('#UserId').val();
+            var StartDate = $('#DateFrom').val();
+            var EndDate = $('#DateTo').val();
+            var statusfilter = status;
+            window.location = `Report/GetReport?reportType=${reportType}&userid=${userid}&StartDate=${StartDate}&EndDate=${EndDate}&AttendanceStatus=${statusfilter}`;
+        }
+
+
+        function RenderDataItem(Attendance) {
+            var TbodyHtml = `<tr><td class="text-center">${Attendance.userName}</td><td class="text-center">${Attendance.dayOfWeek}</td><td class="text-center">${Attendance.day}</td>${GetSignInTime(Attendance.signInTime)}${GetSignOutTime(Attendance.signOutTime)}<td>${Attendance.status}</td></tr>`
+            $("#Tblbady").append(TbodyHtml)
+        }
+        function GetSignInTime(SignInTime) {
+            var html = ""
+            if (SignInTime == null) {
+                return html = `<td class="text-center"><span class="btn-inner"><svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M2 6.94975C2 6.06722 2 5.62595 2.06935 5.25839C2.37464 3.64031 3.64031 2.37464 5.25839 2.06935C5.62595 2 6.06722 2 6.94975 2C7.33642 2 7.52976 2 7.71557 2.01738C8.51665 2.09229 9.27652 2.40704 9.89594 2.92051C10.0396 3.03961 10.1763 3.17633 10.4497 3.44975L11 4C11.8158 4.81578 12.2237 5.22367 12.7121 5.49543C12.9804 5.64471 13.2651 5.7626 13.5604 5.84678C14.0979 6 14.6747 6 15.8284 6H16.2021C18.8345 6 20.1506 6 21.0062 6.76946C21.0849 6.84024 21.1598 6.91514 21.2305 6.99383C22 7.84935 22 9.16554 22 11.7979V14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V6.94975Z" stroke="#fb0404" stroke-width="1.5"></path> <path opacity="0.5" d="M10.5 15L13.5 12M13.5 15L10.5 12" stroke="#fb0404" stroke-width="1.5" stroke-linecap="round"></path></g></svg></span></td>`
+            }
+            else {
+                return html = ` <td class="text-center text-success">${SignInTime}</td>`
+            }
+        }
+        function GetSignOutTime(SignOutTime) {
+            var html = "";
+            if (SignOutTime == null) {
+                return html = ` <td class="text-center"><span class="btn-inner"><svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M2 6.94975C2 6.06722 2 5.62595 2.06935 5.25839C2.37464 3.64031 3.64031 2.37464 5.25839 2.06935C5.62595 2 6.06722 2 6.94975 2C7.33642 2 7.52976 2 7.71557 2.01738C8.51665 2.09229 9.27652 2.40704 9.89594 2.92051C10.0396 3.03961 10.1763 3.17633 10.4497 3.44975L11 4C11.8158 4.81578 12.2237 5.22367 12.7121 5.49543C12.9804 5.64471 13.2651 5.7626 13.5604 5.84678C14.0979 6 14.6747 6 15.8284 6H16.2021C18.8345 6 20.1506 6 21.0062 6.76946C21.0849 6.84024 21.1598 6.91514 21.2305 6.99383C22 7.84935 22 9.16554 22 11.7979V14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V6.94975Z"stroke="#fb0404"stroke-width="1.5"></path><path opacity="0.5" d="M10.5 15L13.5 12M13.5 15L10.5 12"stroke="#fb0404"stroke-width="1.5"stroke-linecap="round"></path></g></svg></span></td>`
+            }
+            else {
+                return html = `<td class="text-center text-success">${SignOutTime}</td>`
+            }
+        }
+        var data = {
+            CurPage: 1,
+            Size: $("#SizeSelect").val(),
+            SortBy: $('#SortBy').val(),
+            SortOrder: $('#SortOrder').val(),
+            UserId: $('#UserId').val(),
+            DateTo: $('#DateTo').val(),
+            DateFrom: $('#DateFrom').val(),
+            Day: $('#Day').val(),
+            Status: status
+        };
+
+        $(document).ready(function () {
+            data.Size = 10;
+            ReGetData();
+        });
+        function GetDataByActivtiy(activitiy) {
+            data.Status = activitiy;
+            ReGetData();
+        }
+
+        function ReGetData() {
+            data.Size = $("#SizeSelect").val();
+            data.SortBy = $('#SortBy').val();
+            data.SortOrder = $('#SortOrder').val();
+            data.UserId = $('#UserId').val();
+            data.DateTo = $('#DateTo').val();
+            data.DateFrom = $('#DateFrom').val();
+            data.Day = $('#Day').val();
+            totalPages = PaginationData(url, data, RenderDataItem);
+        }
+
+        $("#firstPage").on("click", () => {
+            data.CurPage = 1;
+            totalPages = PaginationData(url, data, RenderDataItem);
+        });
+        $("#nexPage").on("click", () => {
+            data.CurPage = data.CurPage + 1;
+            totalPages = PaginationData(url, data, RenderDataItem);
+        });
+        $("#previousPage").on("click", () => {
+            data.CurPage = data.CurPage - 1;
+            totalPages = PaginationData(url, data, RenderDataItem);
+        });
+        $("#lastPage").on("click", () => {
+            data.CurPage = totalPages;
+            totalPages = PaginationData(url, data, RenderDataItem);
+        });
+        $("#SizeSelect").on("change", GetDataOnEvent);
+        $("#SortOrder").on("change", GetDataOnEvent);
+        $("#SortBy").on("change", GetDataOnEvent);
+        $("#searchFrom").on('submit', GetDataOnEvent);
+
+        function GetDataOnEvent(e) {
+            e.preventDefault();
+            ReGetData();
+        }
+
+
+        var dateSelect = document.querySelector('#DateSelect');
+        var specific = document.querySelector('#specific');
+        var datefrom = document.querySelector('#datefromDiv');
+        var dateto = document.querySelector('#datetoDiv');
+        var specificinput = document.querySelector('#Day');
+        var datefrominput = document.querySelector('#DateFrom');
+        var datetoinput = document.querySelector('#DateTo');
+        function showspecificdate() {
+            specific.classList.replace('d-none', 'd-block');
+            datefrom.classList.replace('d-block', 'd-none');
+            dateto.classList.replace('d-block', 'd-none');
+        }
+        function showPerioddate() {
+            specific.classList.replace('d-block', 'd-none');
+            datefrom.classList.replace('d-none', 'd-block');
+            dateto.classList.replace('d-none', 'd-block');
+        }
+        window.addEventListener('load', function () {
+            console.log("specificinput", typeof (specificinput.value));
+            console.log("datefrominput", datefrominput.value);
+            console.log("datetoinput", datetoinput.value);
+            if (specificinput.value) {
+                dateSelect.value = 'Specific';
+                showspecificdate();
+            }
+            else if (datefrominput.value || datetoinput.value) {
+                dateSelect.value = 'Period';
+                showPerioddate();
+            }
+        });
+
+        dateSelect.addEventListener('change', (e) => {
+            if (e.target.value === 'Specific') {
+                showspecificdate();
+                specificinput.value = null;
+                datefrominput.value = null;
+                datetoinput.value = null;
+            }
+            else {
+                showPerioddate();
+                specificinput.value = null;
+                datefrominput.value = null;
+                datetoinput.value = null;
+            }
+        })
+
+    </script>
+}

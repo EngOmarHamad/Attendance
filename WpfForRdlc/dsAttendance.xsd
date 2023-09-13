@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsAttendance" targetNamespace="http://tempuri.org/dsAttendance.xsd" xmlns:mstns="http://tempuri.org/dsAttendance.xsd" xmlns="http://tempuri.org/dsAttendance.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="Attendence_imdtConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="Attendence_imdtConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.WpfForRdlc.Properties.Settings.GlobalReference.Default.Attendence_imdtConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="AttTableAdapter" GeneratorDataComponentClassName="AttTableAdapter" Name="Att" UserDataComponentName="AttTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="Attendence_imdtConnectionString (Settings)" DbObjectName="[Attendence-imdt].dbo.Att" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT Id, Day, SignInTime, SignOutTime, AttendenceStatus, UserName FROM dbo.Att</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Id" DataSetColumn="Id" />
+              <Mapping SourceColumn="Day" DataSetColumn="Day" />
+              <Mapping SourceColumn="SignInTime" DataSetColumn="SignInTime" />
+              <Mapping SourceColumn="SignOutTime" DataSetColumn="SignOutTime" />
+              <Mapping SourceColumn="AttendenceStatus" DataSetColumn="AttendenceStatus" />
+              <Mapping SourceColumn="UserName" DataSetColumn="UserName" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsAttendance" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="dsAttendance" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsAttendance">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Att" msprop:Generator_RowEvHandlerName="AttRowChangeEventHandler" msprop:Generator_RowDeletedName="AttRowDeleted" msprop:Generator_RowDeletingName="AttRowDeleting" msprop:Generator_RowEvArgName="AttRowChangeEvent" msprop:Generator_TablePropName="Att" msprop:Generator_RowChangedName="AttRowChanged" msprop:Generator_RowChangingName="AttRowChanging" msprop:Generator_TableClassName="AttDataTable" msprop:Generator_RowClassName="AttRow" msprop:Generator_TableVarName="tableAtt" msprop:Generator_UserTableName="Att">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Id" msprop:Generator_ColumnPropNameInRow="Id" msprop:Generator_ColumnPropNameInTable="IdColumn" msprop:Generator_ColumnVarNameInTable="columnId" msprop:Generator_UserColumnName="Id" type="xs:int" />
+              <xs:element name="Day" msprop:Generator_ColumnPropNameInRow="Day" msprop:Generator_ColumnPropNameInTable="DayColumn" msprop:Generator_ColumnVarNameInTable="columnDay" msprop:Generator_UserColumnName="Day" type="xs:dateTime" />
+              <xs:element name="SignInTime" msprop:Generator_ColumnPropNameInRow="SignInTime" msprop:Generator_ColumnPropNameInTable="SignInTimeColumn" msprop:Generator_ColumnVarNameInTable="columnSignInTime" msprop:Generator_UserColumnName="SignInTime" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="SignOutTime" msprop:Generator_ColumnPropNameInRow="SignOutTime" msprop:Generator_ColumnPropNameInTable="SignOutTimeColumn" msprop:Generator_ColumnVarNameInTable="columnSignOutTime" msprop:Generator_UserColumnName="SignOutTime" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="AttendenceStatus" msprop:Generator_ColumnPropNameInRow="AttendenceStatus" msprop:Generator_ColumnPropNameInTable="AttendenceStatusColumn" msprop:Generator_ColumnVarNameInTable="columnAttendenceStatus" msprop:Generator_UserColumnName="AttendenceStatus" type="xs:int" />
+              <xs:element name="UserName" msprop:Generator_ColumnPropNameInRow="UserName" msprop:Generator_ColumnPropNameInTable="UserNameColumn" msprop:Generator_ColumnVarNameInTable="columnUserName" msprop:Generator_UserColumnName="UserName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="256" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Att" />
+      <xs:field xpath="mstns:Id" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

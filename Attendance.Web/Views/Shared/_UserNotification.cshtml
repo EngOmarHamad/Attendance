@@ -1,0 +1,44 @@
+﻿@using Attendance.Models;
+@using Attendance.Utility.SharedMethods;
+@model List<NotificationModel>
+@if (Model != null && Model.Count > 0)
+{
+    @foreach (var item in Model)
+    {
+        <div class="iq-sub-card p-2">
+            <div class="d-flex align-items-center">
+                <img class="p-1 avatar-40 rounded-pill bg-soft-primary" src="@item.Image" alt="">
+                <div class="ms-3 w-100">
+                    <p class="mb-0 text-dark">
+                        <small>
+                            @item.Text
+                        </small>
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="float-end font-size-12">
+                            @item.DateAdded.GetPrettyDate()
+                        </small>
+                    </div>
+                </div>
+            </div>
+            @if (@item.URL != null)
+            {
+                <a href="@item.URL" class="btn btn-sm">Show</a>
+            }
+            <button type="button" class="readNoti btn btn-sm" data-id="@item.Id">read</button>
+        </div>
+    }
+}
+else
+{
+    <div class="iq-sub-card">
+        <div class="ms-3 w-100">
+            <p class="mb-0 text-dark">
+                <small>
+                    No Notifications
+                </small>
+            </p>
+        </div>
+    </div>
+
+}

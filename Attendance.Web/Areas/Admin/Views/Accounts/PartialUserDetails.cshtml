@@ -1,0 +1,100 @@
+﻿@model UserViewModel
+
+
+
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex flex-wrap align-items-center mb-3 mb-sm-0">
+            <h4 class="me-2 h4">@Model.FullName</h4>
+            <span>- @Model.Major</span>
+        </div>
+        <div class="header-title mt-5">
+            <h5 class="card-title">About Me</h5>
+        </div>
+    </div>
+    <div class="card-body text-wrap ">
+        <div class="text-wrap">
+            <p>@Model.AboutMe</p>
+        </div>
+        <div class="row g-0">
+            <div class="col-md-6">
+                <div class="mt-2 d-flex align-items-center gap-2 ">
+                    <h6 class="mb-1">Joined:</h6>
+                    <p class="m-0">@Model.JoinedDate</p>
+                </div>
+                <div class="mt-2 d-flex align-items-center gap-2 ">
+                    <h6 class="mb-1">Gender:</h6>
+                    <p class="m-0">@(Model.Gender == 0 ? "Male" : "Female")</p>
+                </div>
+                <div class="mt-2 d-flex align-items-center gap-2 ">
+                    <h6 class="mb-1">Birth Date:</h6>
+                    <p class="m-0">@Model.DateOfBirth</p>
+                </div>
+                <div class="mt-2 d-flex align-items-center gap-2 ">
+                    <h6 class="mb-1">Email:</h6>
+                    <p class="m-0"><a href="#" class="text-body">@Model.Email</a></p>
+                </div>
+                <div class="mt-2 d-flex align-items-center gap-2 ">
+                    <h6 class="mb-1">Contact:</h6>
+                    <p class="m-0"><a href="#" class="text-body">@Model.PhoneNumber</a></p>
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                @if (!string.IsNullOrEmpty(Model.Address))
+                {
+                    <div class="mt-2 d-flex align-items-center gap-2 ">
+                        <h6 class="mb-1">Address:</h6>
+                        <p class="m-0">@Model.Address</p>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.Status))
+                {
+                    <div class="mt-2 d-flex align-items-center gap-2 ">
+                        <h6 class="mb-1">Status:</h6>
+                        <p class="m-0">
+                            <a href="#" class="text-body">
+                                <span class="badge @(Model.Status==UserStatus.Active.ToString()?"bg-success":"bg-danger")">
+                                    @Model.Status
+                                </span>
+                            </a>
+                        </p>
+                    </div>
+                }
+                <div class="mt-2 d-flex align-items-center gap-2 ">
+                    <h6 class="mb-1">Contact:</h6>
+                    <p class="m-0"><a href="#" class="text-body">@Model.PhoneNumber</a></p>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="user-bio">
+            <div class="header-title">
+                <h5 class="card-title">About His Contract</h5>
+            </div>
+        </div>
+        <div class="row g-0">
+            <div class="col-md-6">
+                @if (Model.HasContract ?? false)
+                {
+                    <div class="mt-2 d-flex align-items-center gap-2 ">
+                        <h6 class="mb-1">HasContract:</h6>
+                        <p class="m-0"><a href="#" class="text-body">@Model.HasContract</a></p>
+                    </div>
+                    <div class="mt-2 d-flex align-items-center gap-2 ">
+                        <h6 class="mb-1">Conract:</h6>
+                        <p class="m-0"><a href="#" class="text-body">@Model.CurrentContractName</a></p>
+                    </div>
+                }
+                else
+                {
+                    <div class="mt-2 d-flex align-items-center gap-2 ">
+                        <p class="m-0"><a href="#" class="text-body">He has no current contract.</a></p>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+</div>
